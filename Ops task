@@ -1,0 +1,187 @@
+Electricity Bill generator
+Scenario: 
+A utility company charges consumers based on unit consumption: 
+Units Consumed Rate per Unit (PKR) 
+0–100 
+10 
+101–200 
+>200 
+Task: 
+15 
+20 
+ Input the number of units consumed. 
+ Calculate the total bill. 
+ Display the bill. 
+Example: 
+ Input: 250 
+ Output: “Total bill = PKR 3500” 
+Hint: Use slab-wise conditional rules and update working memory after each calculation.
+Solution
+(p input_rule
+    (start)
+→
+(Write "Enter number of units consumed")
+   (read<x>)
+(insert ' units<x>)
+ (remove 1)
+)
+
+
+(p calculatebill1
+  (units <y>>0
+(units <y><=100)
+→
+(insert' result <y>*10)
+(remove 1)
+)
+
+(p calculatebill2
+  (units <y>>100)
+(units <y><=200)
+→
+(insert' result 100*10+(<y>-100)*15)
+(remove 1)
+)
+
+(p calculatebill3
+  (units <y>>200)
+→
+(insert' result 100*10+100*15+(<y>-200)*20)
+(remove 1)
+)
+
+
+(p printrule
+  (result <r>)
+
+→
+(Write "Total bill=")
+(Write <r>)
+(remove 1)
+)
+
+
+
+Income tax calulator
+Scenario: 
+Compute income tax based on annual salary and age: 
+ Age ≤ 60: 
+o Income ≤ 500,000 → 5% tax 
+o Income 500,001–1,000,000 → 10% tax 
+o Income > 1,000,000 → 15% tax 
+ Age > 60 → 5% tax for all income 
+Task: 
+ Input age and annual salary. 
+ Apply tax rules and display tax amount. 
+Example: 
+ Input: Age = 45, Salary = 800,000 
+ Output: “Income Tax = PKR 80,000” 
+Hint: Use conditional rules to check age and salary slabs.
+ 
+
+Solution
+(p input_rule
+    (start)
+→
+(Write "Enter age")
+   (read<age>)
+(Write "Enter salary")
+   (read<salary>)
+(insert ' tax<age><salary>)
+ (remove 1)
+)
+
+(p calculate1
+  (tax <age><=60 <salary><=500000)
+→
+(insert' result <salary>*5/100)
+(remove 1)
+)
+
+(p calculate2
+  (tax <age><=60 (and(<salary><=500000)(<salary><=100000)
+→
+(insert' result <salary>*10/100)
+(remove 1)
+)
+
+(p calculate3
+  (tax <age><=60 (<salary>>100000)
+→
+(insert' result <salary>*15/100)
+(remove 1)
+)
+
+(p calculate4
+  (tax <age>>60 <salary>)
+→
+(insert' result <salary>*5/100)
+(remove 1)
+)
+
+(p printrule
+  (result <r>)
+
+→
+(Write "income tax=")
+(Write <r>)
+(remove 1)
+)
+
+
+Ticket Fare Calculator
+
+
+Scenario: 
+A travel company charges ticket fares based on distance and passenger age: 
+ Base rate: PKR 10 per km 
+ Age < 12 → 50% discount 
+ Age ≥ 60 → 25% discount 
+Task: 
+ Input distance (km) and passenger age. 
+ Compute total fare applying discounts. 
+ Display the fare. 
+Example: 
+ Input: Distance = 100 km, Age = 10 
+ Output: “Ticket Fare = PKR 500” 
+Hint: Use conditional rules for age-based discounts and arithmetic for fare calculation.
+
+Solution
+(p input_rule
+    (start)
+→
+(Write "Enter distance")
+   (read<distance>)
+(Write "Enter passenger age")
+   (read<age>)
+(insert ' ticketFare<distance><age>)
+ (remove 1)
+)
+
+(p calculate1
+  (ticketFare <distance><age><12 )
+→
+(insert' result <distance>*10-(<distance>*10*50/100)
+(remove 1)
+)
+
+(p calculate2
+  (ticketFare <distance><age>>=60 )
+→
+(insert' result <distance>*10-(<distance>*10*25/100)
+(remove 1)
+)
+
+(p printrule
+  (result <r>)
+
+→
+(Write "ticket fare=")
+(Write <r>)
+(remove 1)
+)
+
+
+
+
+
